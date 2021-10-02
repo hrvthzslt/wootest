@@ -1,7 +1,6 @@
 echo "###########################################"
 echo "# Cleaning wp-app, wp-data, volumes, .env #"
 echo "###########################################"
-printf "/n/n"
 
 sudo rm -rf wp-app
 sudo rm -rf wp-data
@@ -17,7 +16,6 @@ fi
 echo "#####################"
 echo "# Starting services #"
 echo "#####################"
-printf "/n/n"
 
 docker compose up wp -d
 docker compose up pma -d
@@ -29,7 +27,6 @@ done;
 echo "########################"
 echo "# Installing wordpress #"
 echo "########################"
-printf "/n/n"
 
 docker compose run --rm wpcli wp core install \
     --url=$APP_URL \
@@ -41,7 +38,6 @@ docker compose run --rm wpcli wp core install \
 echo "################################################"
 echo "# Installing woocommerce with storefront theme #"
 echo "################################################"
-printf "/n/n"
 
 docker compose run --rm wpcli wp plugin install woocommerce --activate
 docker compose run --rm wpcli wp theme install storefront --activate
