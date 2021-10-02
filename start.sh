@@ -45,3 +45,10 @@ printf "/n/n"
 
 docker compose run --rm wpcli wp plugin install woocommerce --activate
 docker compose run --rm wpcli wp theme install storefront --activate
+
+echo "##################"
+echo "# Importing data #"
+echo "##################"
+
+docker cp "wordpress.sql" wp:"/var/www/html/wordpress.sql"
+docker compose run --rm wpcli wp db import wordpress.sql
