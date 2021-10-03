@@ -1,3 +1,12 @@
+if [ -f .env ]; then
+  export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
+else
+  echo "##################################################"
+  echo "# Missing .env, example provided in .env.example #"
+  echo "##################################################"
+  exit
+fi
+
 echo "###########################################"
 echo "# Cleaning wp-app, wp-data, volumes, .env #"
 echo "###########################################"
@@ -5,13 +14,7 @@ echo "###########################################"
 sudo rm -rf wp-app
 sudo rm -rf wp-data
 
-cp -r .env.example .env
-
 docker compose down -v
-
-if [ -f .env ]; then
-  export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
-fi
 
 echo "#####################"
 echo "# Starting services #"
