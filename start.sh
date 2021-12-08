@@ -1,3 +1,5 @@
+#! /usr/bin/bash
+
 if [ -f .env ]; then
   export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
 else
@@ -32,11 +34,11 @@ echo "# Installing wordpress #"
 echo "########################"
 
 docker compose run --rm wpcli wp core install \
-    --url=$APP_URL \
-    --title=$APP_TITLE \
-    --admin_user=$ADMIN_USER \
-    --admin_password=$ADMIN_PASSWORD \
-    --admin_email=$ADMIN_EMAIL
+    --url="$APP_URL" \
+    --title="$APP_TITLE" \
+    --admin_user="$ADMIN_USER" \
+    --admin_password="$ADMIN_PASSWORD" \
+    --admin_email="$ADMIN_EMAIL"
 
 echo "################################################"
 echo "# Installing woocommerce with storefront theme #"
