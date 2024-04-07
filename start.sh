@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 if [ -f .env ]; then
-  export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
+  export $(echo $(cat .env | sed 's/#.*//g' | xargs) | envsubst)
 else
   echo "##################################################"
   echo "# Missing .env, example provided in .env.example #"
@@ -25,20 +25,20 @@ echo "#####################"
 docker compose up wp -d
 docker compose up pma -d
 
-until [ "`docker inspect -f {{.State.Health.Status}} db`" == "healthy" ]; do
-  sleep 0.1;
-done;
+until [ "$(docker inspect -f {{.State.Health.Status}} db)" == "healthy" ]; do
+  sleep 0.1
+done
 
 echo "########################"
 echo "# Installing wordpress #"
 echo "########################"
 
 docker compose run --rm wpcli wp core install \
-    --url="$APP_URL" \
-    --title="$APP_TITLE" \
-    --admin_user="$ADMIN_USER" \
-    --admin_password="$ADMIN_PASSWORD" \
-    --admin_email="$ADMIN_EMAIL"
+  --url="$APP_URL" \
+  --title="$APP_TITLE" \
+  --admin_user="$ADMIN_USER" \
+  --admin_password="$ADMIN_PASSWORD" \
+  --admin_email="$ADMIN_EMAIL"
 
 echo "################################################"
 echo "# Installing woocommerce with storefront theme #"
